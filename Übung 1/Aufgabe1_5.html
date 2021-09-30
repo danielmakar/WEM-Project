@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufagbe 1.5</title>
+</head>
+<style>
+    html, body {
+        margin: 0;
+    }
+    #header {
+        display: flex;
+        background-color: #363636;
+        height: 100px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+    #header span {
+        color: rgba(255, 255, 255, 0.836);
+        margin: 0 20px 0;
+        font-size: 28px;
+    }
+    #main {
+        background-color: #ebeae6;
+    }
+    #main h1 {
+        color: black;
+        text-align: center;
+        margin: 0;
+        padding-top: 20px;
+        font-size: 45px;
+    }
+    #content {
+        display: flex;
+        flex-direction: row;
+        padding: 30px 0 30px;
+    }
+    #content img {
+        margin-left: 120px;
+        border: 2px solid rgba(0, 0, 0, 0.678);
+        border-radius: 5px;
+    }
+    #content-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-left: 180px;
+        padding-top: 100px;
+        width: 1000px;
+    }
+    #content-text p {
+        font-size: 35px;
+    }
+    #footer {
+        background-color: #011926;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #footer p {
+        padding-top: 100px;
+        margin: 0;
+        font-size: 35px;
+        color: rgba(255, 255, 255, 0.836);
+    }
+    button {
+        background-color: #f88e37;
+        color: white;
+        text-align: center;
+        font-size: 30px;
+        border: 0;
+        border-radius: 5px;
+    }
+    #order {
+        width: 450px;
+        margin-top: 50px;
+    }
+    #offer {
+        width: 700px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+</style>
+<body>
+    <div id="container">
+        <div id="header">
+            <span>The book series</span>
+            <span>Testimonials</span>
+            <span>The author</span>
+            <span>Free resources</span>
+        </div>
+        <div id="main">
+            <h1>You dont know JavaScript</h1>
+            <div id="content">
+                <img src="https://kaul.inf.h-brs.de/wem/assets/img/landing-img.png" alt="You dont know JavaScript" height="1000px">
+                <div id="content-text">
+                    <p>Don't just drift through javascript</p>
+                    <p>Understand how javascript works</p>
+                    <p>Start your journey through the bumpy side of javascript</p>
+                    <button id="order">ORDER YOUR COPY NOW</button>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <p>The first ebook in the books series is absolutely free.</p>
+            <button id="offer">FIND OUT MORE ABOUT THE OFFER</button>
+        </div>
+    </div>
+</body>
+</html>

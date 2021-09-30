@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgabe 1.4</title>
+</head>
+<style>
+    body {
+        background-color: #b2d6d1;
+        font-family: Helvetica;
+    }
+    .center {
+        text-align: center;
+    }
+    .inner {
+        background-color: white;
+        margin-left: 30px;
+        margin-right: 30px;
+        padding-top: 15px;
+        height: 800px;
+        font-size: 25px;
+    }
+    .left {
+        display: inline-block;
+        width: 47%;
+        text-align: right;
+        padding: 5px;
+        margin-top: 10px;
+    }
+    .right {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .list {
+        position: relative;
+        left: -45px;
+        display: block;
+        padding-bottom: 10px;
+    }
+    .inputField {
+        height: 20px;
+        width: 250px;
+    }
+    .options {
+        height: 30px;
+        font-size: 25px;
+    }
+</style>
+<body>
+    <div class="outer">
+        <h1 class="center">Survey Form</h1>
+        <div class="inner">
+            <form>
+                <p class="center">Let us know how we can improve freeCodeCamp</p>
+                <div>
+                    <label for="name" class="left">* Name:</label>
+                    <input type="text" name="Name" placeholder="Enter your name" id="name" class="inputField"><br>
+                </div>
+                <div>
+                    <label for="email" class="left">* EMail:</label>
+                    <input type="text" name="Email" placeholder="Enter your Email" id="email" class="inputField"><br>
+                </div>
+                <div>
+                    <label for="age" class="left">* Age:</label>
+                    <input type="number" name="Age" placeholder="Age" id="age" class="inputField"><br>
+                </div>
+                <div>
+                    <label for="role" class="left">Which option best describes your current role?</label>
+                    <select name="role" id="role" class="options">
+                        <option value="Student">Student</option>
+                        <option value="Schüler">Schüler</option>
+                    </select><br>
+                </div>
+                <div>
+                    <label for="recommend" style="vertical-align: top" class="left">* How likely is that you would recommend<br>freeCodeCamp to a friend?</label>
+                    <ul id="recommend" style="list-style: none;" class="right">
+                        <li class="list"><input type="radio" name="recommend" value="definitely" id="radio1">
+                            <label for="radio1">Definitely</label><br></li>
+                        <li class="list"><input type="radio" name="recommend" value="maybe" id="radio2" class="right">
+                            <label for="radio2">Maybe</label><br></li>
+                        <li class="list"><input type="radio" name="recommend" value="notSure" id="radio3" class="right">
+                            <label for="radio3">Not Sure</label><br></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <label for="likeMost" class="left">What do you like most in FCC?</label>
+                    <select name="likeMost" id="likeMost" class="options">
+                        <option value="Option">Select an Option</option>
+                    </select><br>
+                </div>
+
+                <div>
+                    <label for="improve" style="vertical-align: top" class="left">Things that should be improved in the future<br>(Check all that apply)</label>
+                    <ul id="improve" style="list-style: none;" class="right">
+                        <li class="list"><input type="checkbox" name="improve" value="frontend" id="check1">
+                            <label for="check1">Front-end Projects</label></li>
+                        <li class="list"><input type="checkbox" name="improve" value="backend" id="check2">
+                            <label for="check2">Back-end Projects</label></li>
+                        <li class="list"><input type="checkbox" name="improve" value="data" id="check3">
+                            <label for="check3">Data Visualization</label></li>
+                    </ul>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</body>
+</html>
