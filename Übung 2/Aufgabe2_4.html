@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgabe 2.4</title>
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<body>
+    <div class="container">
+        <header class="header">
+            <span class="link">The book series</span>
+            <span class="link">Testamonials</span>
+            <span class="link">The Author</span>
+            <span class="link">Free resources</span>
+        </header>
+        <div class="main">
+            <h1 class="title">You dont know JavaScript</h1>
+            <div class="cover">
+                <img src="https://kaul.inf.h-brs.de/wem/assets/img/landing-img.png" alt="You dont know JavaScript">
+            </div>
+            <div class="description">
+                <span class="text">Don't just drift through javascript.</span>
+                <span class="text">Understand how javascript works</span>
+                <span class="text">Start your journey through the bumpy side of javascript</span>
+                <button>ORDER YOUR COPY NOW</button>
+            </div>
+        </div>
+        <footer class="footer">
+            <span>The first ebook in the book series is completely free.</span>
+            <button>FIND OUT MORE ABOUT THE OFFER</button>
+        </footer>
+    </div>
+</body>
+<style>
+    body, html {
+        margin: 0;
+    }
+    * {
+        text-align: center;
+    }
+    .container {
+        display: grid;
+        grid-template-rows: 5vh 75vh 20vh;
+        grid-template-areas: 
+            'header'
+            'main'
+            'footer';
+        height: 100vh;
+    }
+    .main {
+        background-color: #ebeae6;
+        display: grid;
+        grid-template-rows: 10vh 65vh;
+        grid-template-columns: 50vw 50vw;
+        grid-template-areas: 
+            'title title'
+            'cover description';
+    }
+    .header {
+        grid-area: header;
+        background-color: #363636;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .link {
+        color: lightgrey;
+        margin: 5px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 15px;
+    }
+    .title {
+        grid-area: title;
+    }
+    .cover {
+        grid-area: cover;
+    }
+    img {
+        height: 60vh;
+    }
+    .description {
+        grid-area: description;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .text {
+        font-size: 20px;
+        margin: 30px 0px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .footer {
+        grid-area: footer;
+        background-color: #011926;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    footer span {
+        color: #ffffff;
+        margin: 15px 0px;
+        font-size: 20px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    button {
+        background-color: #f88e37;
+        color: #ffffff;
+        border: 0px solid;
+        border-radius: 3px;
+        font-family: 'Fjalla One', sans-serif;
+        padding: 8px 0px;
+        width: 300px;
+    }
+    footer button {
+        margin-bottom: 10px;
+        width: 500px;
+    }
+    @media screen and (max-width: 768px) {
+        .main {
+            grid-template-columns: 30vw 70vw;
+        }
+        img {
+            height: 20vh;
+        }
+        footer span {
+            font-size: 15px;
+        }
+        .text {
+            font-size: 15px;
+        }
+        .link {
+            font-size: 10px;
+        }
+        button {
+            width: 200px;
+        }
+        footer button {
+            width: 300px;
+        }
+    }
+</style>
+</html>
