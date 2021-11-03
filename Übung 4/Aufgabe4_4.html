@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgabe 4.4</title>
+    <!--<script src="https://kit.fontawesome.com/83aff980cb.js" crossorigin="anonymous"></script>-->
+    <script src="https://kit.fontawesome.com/83aff980cb.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>HTML Editor</h1>
+
+    <div class="toolbar" id="toolbar">
+        <a href="#" class="toolbar-element" data-command="h1">H1</a>
+        <a href="#" class="toolbar-element" data-command="h2">H2</a>
+        <a href="#" class="toolbar-element" data-command="h3">H3</a>
+        <a href="#" class="toolbar-element" data-command="bold"><i class="fa fa-bold" data-command="bold"></i></a>
+        <a href="#" class="toolbar-element" data-command="italic"><i class="fa fa-italic" data-command="italic"></i></a>
+        <a href="#" class="toolbar-element" data-command="underline"><i class="fa fa-underline"
+                data-command="underline"></i></a>
+        <a href="#" class="toolbar-element" data-command="strikeThrough"><i class="fa fa-strikethrough"
+                data-command="strikeThrough"></i></a>
+        <a href="#" class="toolbar-element" data-command="justifyRight"><i class="fa fa-align-right"
+                data-command="justifyRight"></i></a>
+        <a href="#" class="toolbar-element" data-command="justifyLeft"><i class="fa fa-align-left"
+                data-command="justifyLeft"></i></a>
+        <a href="#" class="toolbar-element" data-command="justifyCenter"><i class="fa fa-align-center"
+                data-command="justifyCenter"></i></a>
+        <a href="#" class="toolbar-element" data-command="insertOrderedList"><i class="fa fa-list-ol"
+                data-command="insertOrderedList"></i></a>
+        <a href="#" class="toolbar-element" data-command="insertUnorderedList"><i class="fa fa-list"
+                data-command="insertUnorderedList"></i></a>
+        <a href="#" class="toolbar-element" data-command="createLink"><i class="fa fa-link"
+                data-command="createLink"></i></a>
+        <a href="#" class="toolbar-element" data-command="undo"><i class="fa fa-rotate-left"
+                data-command="undo"></i></a>
+        <a href="#" class="toolbar-element" data-command="redo"><i class="fa fa-rotate-right"
+                data-command="redo"></i></a>
+    </div>
+
+    <div class="editor" contenteditable="true"></div>
+</body>
+<script src="Aufgabe4_4.js"></script>
+<style>
+    .toolbar {
+        display: flex;
+        width: 50%;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px;
+        justify-content: space-between;
+    }
+
+    .toolbar-element {
+        display: inline-flex;
+        justify-self: center;
+        padding: 5px;
+        border: 1px solid black;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .editor {
+        width: 50%;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        min-height: 100px;
+    }
+</style>
+
+</html>
