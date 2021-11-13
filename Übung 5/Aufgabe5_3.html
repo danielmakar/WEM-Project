@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgabe 5.3 Webseite</title>
+</head>
+<style>
+    div {
+        width: 100%;
+        height: 4em;
+    }
+
+    #container {
+        background-color: lightgrey;
+    }
+
+    #animate {
+        background-color: yellow;
+    }
+</style>
+
+<body>
+    <h1>Primzahl-Berechnung ohne Webworker</h1>
+    <div id="container">
+        <div id="animate"></div>
+    </div>
+    <p id="primes"></p>
+</body>
+<script async>
+    let primes = document.getElementById("primes");
+    let n = BigInt(300000);
+    setInterval(function () {
+        if (isPrime(n)) {
+            primes.innerHTML = n;
+        }
+        n++;
+    }, 0);
+    async function animate() {
+        const container = document.getElementById("container");
+        const animate = document.getElementById("animate");
+        let width = 1;
+        let animation = requestAnimationFrame(step);
+        async function step(timestamp) {
+            width += 1;
+            if (width === 100) width = 1; // repeat
+            animate.style.width = width + '%';
+            animation = requestAnimationFrame(step);
+        }
+    }
+    function isPrime(num) {
+        for (let i = BigInt(2); i < num; i++) {
+            if (num % i == 0) return false;
+        }
+        return num >= 2;
+    }
+    animate();
+</script>
+
+</html>
