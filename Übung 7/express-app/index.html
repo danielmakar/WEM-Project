@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgabe 7.3</title>
+</head>
+<style>
+    #download {
+        margin-top: 20px;
+    }
+
+    #error {
+        color: red;
+    }
+</style>
+
+<body>
+    <h1>Express.js Server</h1>
+    <p>Wählen Sie zwei Dateien aus, die zeilenweise konkateniert werden sollen:</p>
+
+    <div id="input-container">
+        <form enctype="multipart/form-data">
+            <input id="files" type="file" multiple re>
+        </form>
+    </div>
+
+    <button id="download">Download der erstellten Datei</button>
+    <p id="error"></p>
+</body>
+
+<script>
+    const upload = document.getElementById("files");
+    const button = document.getElementById("download");
+    const error = document.getElementById("error");
+
+    button.addEventListener("click", downloadFile);
+
+    function downloadFile() {
+        if (upload.files[0] == undefined || upload.files[1] == undefined) {
+            error.innerHTML = "Sie müssen zwei Dateien angeben."
+        } else {
+            error.innerHTML = "";
+
+            let fd = new FormData();
+            fd.append("files", upload.files[0]);
+            fd.append("files", upload.files[1]);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:3000/", true);
+            await xhr.send(fd);
+            setTimeout(function () {
+                window.open("http://localhost:3000/download");
+            }, 3000);
+        }
+    }
+</script>
+
+</html>

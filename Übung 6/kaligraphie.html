@@ -1,0 +1,66 @@
+<body style=margin:0;overflow:hidden;>
+<h1></h1>
+<canvas>
+  <script>
+  var a = document.querySelector('canvas')
+  var c = a.getContext('2d')
+  var coord = { "x": 0, "y": 0 }
+  var grabbed = false
+  var cursor = 0
+	var background = 'black'
+  var ink = '100,175,255' // 'r,g,b'
+  function grab(e){
+    grabbed = true
+    cursor = 300
+  }
+  function updateCoordinates(e){
+    e.preventDefault()
+    coord.x = e.clientX || e.touches[0].clientX
+    coord.y = e.clientY || e.touches[0].clientY
+    if (grabbed){
+      cursor--
+      drawNib()
+    }
+    (cursor === 0) && (grabbed = false)
+  }
+  function release(e){
+    grabbed = false
+  }
+  function drawBG(){
+    a.width = innerWidth
+    a.height = innerHeight
+    c.fillStyle = background
+    c.fillRect(0,0,innerWidth,innerHeight)
+  }
+  function drawNib(){
+    c.lineWidth = '3'
+    c.strokeStyle = 'rgba('+ink+','+cursor/300+')'
+    c.beginPath()
+    c.lineTo(coord.x-5,coord.y+10)
+    c.lineTo(coord.x+5,coord.y-10)
+    c.closePath()
+    c.stroke()
+    // Gradient
+    c.beginPath()
+    c.ellipse(coord.x, coord.y, 3, 15, .7, 0, Math.PI*2)
+    c.closePath()
+    var g = c.createRadialGradient(coord.x,coord.y,3,coord.x,coord.y,15)
+    g.addColorStop(0,'rgba('+ink+','+cursor/300+')')
+    g.addColorStop(1,'rgba('+ink+',0)')
+    c.fillStyle = g
+    c.fill()
+  }
+  drawBG()
+  function render(){
+    window.requestAnimationFrame(render)
+  }
+  window.requestAnimationFrame(render)
+  document.addEventListener('mousedown',grab)
+  document.addEventListener('touchstart',grab)
+  document.addEventListener('mousemove',updateCoordinates)
+  document.addEventListener('touchmove',updateCoordinates)
+  document.addEventListener('mouseup',release)
+  document.addEventListener('touchend',release)
+</script>
+</canvas>
+<input type=reset value=Reset onclick="if(confirm('Reset Canvas?'))drawBG();blur()" style="position:fixed;bottom:0;right:0;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.5);border:none;border-radius:.2em;font-size:12pt;color:black;padding:.5em;margin:.5em;">
