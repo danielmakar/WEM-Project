@@ -1,43 +1,85 @@
 let table = document.querySelector("table");
-let size = 3;
-let cells = [];
-for (let i = 65; i < 65 + size; i++) {
-  cells.push(String.fromCharCode(i));
+let rows = 3;
+let columns = 3;
+let map = new Map();
+
+let columnsHead = document.createElement("tr");
+columnsHead.innerHTML += `<th></th>`;
+for (let i = 0; i < columns; i++) {
+    columnsHead.innerHTML += `<th>${String.fromCharCode(i + 65)}</th>`;
+}
+table.appendChild(columnsHead);
+
+for (let i = 1; i < rows + 1; i++) {
+    let row = document.createElement("tr");
+    row.innerHTML += `<th>${i}</th>`;
+
+    for (let j = 0; j < columns; j++) {
+        row.innerHTML += `<td class="cell" id=${String.fromCharCode(
+            j + 65
+        )}${i}></td>`;
+    }
+
+    table.appendChild(row);
 }
 
-for (let i = 0; i < size; i++) {
-  let tableRow = document.createElement("tr");
+let cells = document.getElementsByClassName("cell");
 
-  let tableElement1 = document.createElement("td");
-  tableElement1.id = `${cells[i]}1`;
+for (let i = 0; i < cells.length; i++) {
+    cells[i].setAttribute("contentEditable", "true");
+    cells[i].addEventListener("focusout", function () {
+        map.set(cells[i].id, cells[i].textContent);
+        calc(cells[i], cells[i].textContent);
+    });
+    cells[i].addEventListener("focusin", function () {
+        cells[i].textContent = map.get(cells[i].id);
+    });
+}
 
-  let tableElement2 = document.createElement("td");
-  tableElement2.id = `${cells[i]}2`;
+function calc(cell, content) {
+    if (content.startsWith("=")) {
+        let calcValue = content.substring(1);
 
-  tableRow.append(tableElement1, tableElement2);
-  table.appendChild(tableRow);
-  tableElement1.setAttribute("contenteditable", "true");
-  tableElement2.setAttribute("contenteditable", "true");
+        let valuesString = calcValue.split("(")[1].split(")")[0];
+        let values = valuesString.split(",");
 
-  tableElement2.addEventListener("blur", function () {
-    let formula = tableElement2.innerText;
-    let elements = document.querySelectorAll("td");
-    let ids = [];
-    let neededCells = [];
-    for (let i = 0; i < elements.length; i++) {
-      ids[i] = elements[i].id;
-    }
-    if (formula.startsWith("=SUM")) {
-      for (let i = 0; i < ids.length; i++) {
-        if (formula.includes(ids[i])) {
-          neededCells.push(ids[i]);
+        if (calcValue.startsWith("SUM")) {
+            let calcResult = 0;
+            for (let i = 0; i < values.length; i++) {
+                calcResult += getInt(values[i]);
+            }
+            cell.textContent = calcResult;
         }
-      }
-      let result = 0;
-      for (let i = 0; i < neededCells.length; i++) {
-        result += parseInt(document.getElementById(neededCells[i]).innerText);
-      }
-      this.innerText = result;
+
+        if (calcValue.startsWith("SUB")) {
+            let calcResult = getInt(values[0]);
+            for (let i = 1; i < values.length; i++) {
+                calcResult -= getInt(values[i]);
+            }
+            cell.textContent = calcResult;
+        }
+
+        if (calcValue.startsWith("MUL")) {
+            let calcResult = getInt(values[0]);
+            for (let i = 1; i < values.length; i++) {
+                calcResult *= getInt(values[i]);
+            }
+            cell.textContent = calcResult;
+        }
+
+        if (calcValue.startsWith("DIV")) {
+            let calcResult = getInt(values[0]);
+            for (let i = 1; i < values.length; i++) {
+                calcResult /= getInt(values[i]);
+            }
+            cell.textContent = calcResult;
+        }
     }
-  });
+}
+
+function getInt(value) {
+    if (Number.isInteger(value)) return;
+
+    let cell = document.getElementById(value);
+    if (cell) return parseInt(cell.textContent);
 }
