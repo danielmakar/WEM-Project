@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgabe 8.2</title>
+</head>
+
+<body>
+    <h1>Vertical:</h1>
+    <div style="width: 200px; height: 300px;">
+        <menu-component orientation="vertical">
+            <a href='#'>Promise</a>
+            <a href='#'>async</a>
+            <a href='#'>fetch</a>
+            <a href='#'>callback</a>
+            <a href='#'>class</a>
+        </menu-component>
+    </div>
+    <h1>Horizontal:</h1>
+    <div style="width: 600px; height: 100px;">
+        <menu-component orientation="horizontal">
+            <a href='#'>HTML</a>
+            <a href='#'>CSS</a>
+            <a href='#'>JavaScript</a>
+            <a href='#'>Other</a>
+        </menu-component>
+    </div>
+</body>
+<script type="module">
+    import {
+        LitElement,
+        html,
+        css
+    } from "https://unpkg.com/lit-element/lit-element.js?module";
+
+    export class Menu extends LitElement {
+        constructor() {
+            super();
+            this.orientation = "horizontal";
+        }
+
+        static properties = {
+            orientation: { type: String }
+        };
+
+        static get styles() {
+            return css`
+                .navigation {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+                .navigation button {
+                    width: 150px;
+                    margin: 10px;
+                    border: rgb(103, 189, 223) solid 3px;
+                    border-radius: 8px;
+                    background-color: blanchedalmond;
+                }
+                .navigation button:hover {
+                    background-color: #C9B899;
+                }
+                .horizontal {
+                    flex-flow: no wrap;
+                }
+                .vertical {
+                    flex-flow: column wrap;
+                    padding: 0;
+                }
+            `;
+        }
+
+        render() {
+            let elements = Array.from(this.getElementsByTagName("a"));
+            console.log(elements);
+            //https://stackoverflow.com/questions/62110373/lit-element-cant-get-an-array-of-objects-to-render-output-in-loop
+            return html`
+                <div class="navigation ${this.orientation}">
+                    ${elements.map((e) => html`<button>${e.textContent}</button>`)}
+                </div >
+                `;
+        }
+    }
+
+    customElements.define("menu-component", Menu);
+</script>
+
+</html>
