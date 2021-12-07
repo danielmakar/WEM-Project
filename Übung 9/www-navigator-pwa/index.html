@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#a02b2b">
+    <title>Aufgabe 5.4</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="./images/icons/icon-192x192.png">
+</head>
+
+<body>
+    <div id="header">
+        <h1>WWW-Navigator</h1>
+    </div>
+    <div id="mainnav">
+        <button id="back" disabled>Zurück</button>
+    </div>
+    <div id="subnav"></div>
+    <div id="content">
+        <p>Herzlich Wilkommen!</p>
+        <p>Sie können ein Hauptthema auswählen und anschließend ein Unterthema, um sich eine passende Beschreibung
+            anzuschauen.</p>
+    </div>
+    <div id="source">
+        <p>https://www.w3schools.com/</p>
+    </div>
+</body>
+
+</html>
+
+<script src="index.js">
+
+</script>
+
+<style>
+    * {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+    }
+
+    body {
+        margin: 0;
+        display: grid;
+        grid-template-areas:
+            "header header header"
+            "mainnav mainnav mainnav"
+            "subnav content source";
+        grid-template-rows: 15vh 15vh 70vh;
+        grid-template-columns: 20% 60% 20%;
+        font-size: larger;
+    }
+
+    button {
+        font-size: larger;
+    }
+
+    #header {
+        grid-area: header;
+        text-align: center;
+        background-color: #a02b2b;
+        padding-bottom: 60px;
+        color: white;
+    }
+
+    #mainnav {
+        grid-area: mainnav;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgb(160, 43, 43);
+    }
+
+    #mainnav button {
+        width: 150px;
+        height: 50px;
+        border: rgb(103, 189, 223) solid 3px;
+        border-radius: 8px;
+        background-color: blanchedalmond;
+    }
+
+    #mainnav button:hover {
+        background-color: #C9B899;
+    }
+
+    #subnav {
+        grid-area: subnav;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        background-color: rgb(126, 55, 55);
+    }
+
+    #subnav button {
+        width: 150px;
+        margin: 10px;
+        border: rgb(103, 189, 223) solid 3px;
+        border-radius: 8px;
+        background-color: blanchedalmond;
+    }
+
+    #subnav button:hover {
+        background-color: #C9B899;
+    }
+
+    #content {
+        grid-area: content;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background-color: rgb(103, 189, 223);
+    }
+
+    #content p {
+        margin-left: 10px;
+    }
+
+    #source {
+        background-color: rgb(126, 55, 55);
+        grid-area: source;
+        color: white;
+        word-wrap: break-word;
+    }
+
+    #source p {
+        margin-left: 10px;
+        margin-right: 10px;
+        overflow: auto;
+    }
+</style>

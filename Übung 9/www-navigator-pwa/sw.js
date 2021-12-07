@@ -1,0 +1,26 @@
+// Workbox
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js');
+
+workbox.precaching.precacheAndRoute([
+    {"url": "index.html"},
+    {"url": "index.js"},
+    {"url": "data.json"},
+    {"url": "manifest.webmanifest"}
+])
+
+workbox.routing.registerRoute(
+    /\.(?:js|mjs|css|html|json|js\?v=\d+)$/i,
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'www-navigator',
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                // expiration in 1 week
+                maxAgeSeconds: 60 * 60 * 24 * 7, 
+            })
+        ]
+    })
+);
+
+self.addEventListener('activate', () => {
+    clients.claim();
+});
