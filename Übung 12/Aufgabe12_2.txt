@@ -1,0 +1,18 @@
+select department from employees where userid='96134';
+
+update employees set department='Sales' where userid='89762';
+
+alter table employees add phone varchar(20);
+
+grant update on grant_rights to unauthorized_user;
+
+Smith' or '1'='1'
+
+LoginCount = 0 and userid = 0 OR 1=1
+
+EmployeeName = S and AuthenticationTan = ' OR '1'='1
+
+EmployeeName = S and AuthenticationTan = '; UPDATE employees SET salary=99999 WHERE last_name='Smith
+
+Action contains = %'; DROP TABLE access_log;--
+

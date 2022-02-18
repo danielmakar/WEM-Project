@@ -1,0 +1,32 @@
+Ursachendiagnose: Ursache für diesen Exploit ist, dass die Argumente für die Funktionen des ArrayWrappers nicht validiert werden. Dadurch können Funktionen Elemente des Arrays sein.
+
+Sicherheitskonzept: Eine Möglichkeit ist die Argumente für die Funktionen des ArrayWrappers zunächst zu validieren und zu überprüfen, ob es sich dabei um eine Funktion handelt. Somit kann verhindert werden, dass ein Element des Arrays eine Funktion ist. 
+
+function arrayWrapper() {
+    var array;
+    return {
+        get: function (pos) {
+            return array[pos];
+        },
+        set: function (pos, value) {
+            if (isFunction(pos) || isFunction(value)) {
+                console.log('Es wurde ein eventueller Exploit festgestellt');
+                return;
+            } else {
+                array[pos] = value;
+            }
+        },
+        append: function (value) {
+            if (isFunction(value)) {
+                console.log('Es wurde ein eventueller Exploit festgestellt');
+                return;
+            } else {
+                array.push(value);
+            }
+        },
+    }
+    function isFunction(functionToCheck) {
+        return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    }
+}
+

