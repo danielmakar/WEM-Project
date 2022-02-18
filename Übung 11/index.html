@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgabe 11.2</title>
+</head>
+
+<body>
+    <h1>Performancevergleich von JavaScript und WebAssembly</h1>
+    <div class="container"></div>
+    <p class="loading">Benchmark is loading...</p>
+</body>
+
+<script>
+    function isPrime(num) {
+        for (let i = 2; i < num; i++) {
+            if (num % i == 0) return false;
+        }
+        return num >= 2;
+    }
+
+    function getPrimesJS() {
+        let counter = 0;
+        for (let i = 1; i <= 100000; i++) {
+            if (isPrime(i)) counter++;
+        }
+        return counter;
+    }
+    async function startBenchmark() {
+        const response = await fetch("prime.wasm");
+        const buffer = await response.arrayBuffer();
+        const wasm = await WebAssembly.instantiate(buffer);
+        const getPrimes = wasm.instance.exports.getPrimes;
+
+        const container = document.querySelector(".container");
+        const loading = document.querySelector(".loading");
+
+        let wasmTimes = [];
+        let jsTimes = [];
+
+        for (let i = 0; i < 10; i++) {
+            let startTime1 = performance.now();
+            getPrimes();
+            let endTime1 = performance.now();
+            wasmTimes.push(endTime1 - startTime1);
+
+            let startTime2 = performance.now();
+            getPrimesJS();
+            let endTime2 = performance.now();
+            jsTimes.push(endTime2 - startTime2);
+        }
+
+        let wasmSum = 0;
+        for (let i = 0; i < wasmTimes.length; i++) {
+            wasmSum += wasmTimes[i];
+        }
+
+        let jsSum = 0;
+        for (let i = 0; i < jsTimes.length; i++) {
+            jsSum += jsTimes[i];
+        }
+
+        minWasm = document.createElement("p");
+        maxWasm = document.createElement("p");
+        avgWasm = document.createElement("p");
+
+        minJS = document.createElement("p");
+        maxJS = document.createElement("p");
+        avgJS = document.createElement("p");
+
+        minWasm.innerHTML = `Webassembly-min: ${Math.min(...wasmTimes)}`;
+        maxWasm.innerHTML = `Webassembly-max: ${Math.max(...wasmTimes)}`;
+        avgWasm.innerHTML = `Webassembly-avg: ${wasmSum / wasmTimes.length}`;
+
+        minJS.innerHTML = `JavaScript-min: ${Math.min(...jsTimes)}`;
+        maxJS.innerHTML = `JavaScript-max: ${Math.max(...jsTimes)}`;
+        avgJS.innerHTML = `JavaScript-avg: ${jsSum / jsTimes.length}`;
+
+        container.appendChild(minWasm);
+        container.appendChild(maxWasm);
+        container.appendChild(avgWasm);
+        container.appendChild(minJS);
+        container.appendChild(maxJS);
+        container.appendChild(avgJS);
+
+        loading.innerHTML = "Benchmark is ready!";
+    }
+    startBenchmark();
+</script>
+
+</html>
