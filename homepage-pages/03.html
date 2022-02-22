@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+</head>
+
+<style>
+    .question {
+        padding: 10px;
+    }
+
+    .answer {
+        padding: 10px;
+        background-color: lightgrey;
+    }
+</style>
+
+<body>
+    <h1>JavaScript</h1>
+
+    <div id="1">
+        <h2>3.1. Funktionen in JavaScript</h2>
+
+        <p class="question">Schreiben Sie eine Funktion identity_function(), die ein Argument als Parameter entgegen
+            nimmt und eine Funktion zurück gibt, die dieses Argument zurück gibt.</p>
+
+        <pre class="answer"><code>function identity_function(arg) {
+    return function() {
+        return arg;
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Addier-Funktion addf(), so dass addf(x)(y) genau x + y zurück gibt. (Es
+            haben also zwei Funktionsaufrufe zu erfolgen. addf(x) liefert eine Funktion, die auf y angewandt wird.)</p>
+
+        <pre class="answer"><code>function addf(x) {
+    return function(y) {
+        return x + y;
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Funktion applyf(), die aus einer binären Funktion wie add(x,y) eine
+            Funktion addfberechnet, die mit zwei Aufrufen das gleiche Ergebnis liefert, z.B. addf = applyf(add);
+            addf(x)(y) soll add(x,y) liefern. Entsprechend applyf(mul)(5)(6) soll 30 liefern, wenn mul die binäre
+            Multiplikation ist.</p>
+
+        <pre class="answer"><code>function applyf(func) {
+    return function(arg1) {
+        return function(arg2) {
+            return func(arg1,arg2);
+        }
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Funktion curry() (von Currying), die eine binäre Funktion und ein
+            Argument nimmt, um daraus eine Funktion zu erzeugen, die ein zweites Argument entgegen nimmt, z.B. add3 =
+            curry(add, 3);add3(4) ergibt 7. curry(mul, 5)(6) ergibt 30.</p>
+
+        <pre class="answer"><code>function curry(func, arg1) {
+    return function(arg2) {
+        return func(arg1, arg2);
+    }
+}
+        </code></pre>
+
+        <p class="question">Erzeugen Sie die inc-Funktion mit Hilfe einer der Funktionen addf, applyf und curry aus den
+            letzten Aufgaben, ohne die Funktion inc() selbst zu implementieren. (inc(x) soll immer x + 1 ergeben und
+            lässt sich natürlich auch direkt implementieren. Das ist aber hier nicht die Aufgabe.) Vielleicht schaffen
+            Sie es auch, drei Varianten der inc()-Implementierung zu schreiben?</p>
+
+        <pre class="answer"><code>function inc(x) {
+    return addf(x)(1);
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Funktion methodize(), die eine binäre Funktion (z.B. add, mul) in eine
+            unäre Methode verwandelt. Nach Number.prototype.add = methodize(add); soll (3).add(4) genau 7 ergeben.</p>
+
+        <pre class="answer"><code>function methodize(func) {
+    return function(y) {
+        return func(this,y);
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Funktion demethodize(), die eine unäre Methode (z.B. add, mul) in eine
+            binäre Funktion umwandelt. demethodize(Number.prototype.add)(5, 6) soll 11 ergeben.</p>
+
+        <pre class="answer"><code>function demethodize(function) {
+    return function(arg1, arg2) {
+        return function.call(arg1, arg2);
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Funktion twice(), die eine binäre Funktion in eine unäre Funktion
+            umwandelt, die den einen Parameter zweimal weiter reicht. Z.B. var double = twice(add); double(11) soll 22
+            ergeben; var square = twice(mul); square(11) soll mul(11,11) === 121 ergeben.</p>
+
+        <pre class="answer"><code>function twice(func) {
+    return function(arg) {
+        return func(arg,arg);
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Funktion composeu(), die zwei unäre Funktionen in eine einzelne unäre
+            Funktion transformiert, die beide nacheinander aufruft, z.B. soll composeu(double, square)(3) genau 36
+            ergeben.</p>
+
+        <pre class="answer"><code>function composeu(func1, func2) {
+    return function(arg) {
+        return func2(func1(arg));
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Funktion composeb(), die zwei binäre Funktionen in eine einzelne Funktion
+            transformiert, die beide nacheinander aufruft, z.B. composeb(add, mul)(2, 3, 5) soll 25 ergeben.</p>
+
+        <pre class="answer"><code>function composeb(func1, func2) {
+    return function(x, y, z) {
+        return func2(func1(x, y), z);
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Funktion once(), die einer anderen Funktion nur einmal erlaubt,
+            aufgerufen zu werden, z.B. add_once = once(add); add_once(3, 4) soll beim ersten Mal 7 ergeben, beim zweiten
+            Mal soll jedoch add_once(3, 4) einen Fehlerabbruch bewirken.</p>
+
+        <pre class="answer"><code>function once(func) {
+    return function(arg1, arg2) {
+        let result = func(arg1, arg2);
+        func = null;
+        return result;
+    }
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine Fabrik-Funktion counterf(), die zwei Funktionen inc() und dec()
+            berechnet, die einen Zähler hoch- und herunterzählen. Z.B. counter = counterf(10); Dann soll counter.inc()
+            11 und counter.dec() wieder 10 ergeben.</p>
+
+        <pre class="answer"><code>function counterf(arg) {
+    let counter = {value: arg};
+    counter.inc = function() {
+        this.value++;
+        console.log(this.value);
+    }
+    counter.dec = function() {
+        this.value--;
+        console.log(this.value);
+    }
+    return counter;
+}
+        </code></pre>
+
+        <p class="question">Schreiben Sie eine rücknehmbare Funktion revocable(), die als Parameter eine Funktion nimmt
+            und diese bei Aufruf ausführt. Sobald die Funktion aber mit revoke() zurück genommen wurde, führt ein
+            erneuter Aufruf zu einem Fehler. </p>
+
+        <pre class="answer"><code>function revocable(func) {
+    let method = {func: func}
+    method.invoke = function(arg) {
+        this.func(arg);
+    }
+    method.revoke = function() {
+        this.func = null;
+    }
+    return method;
+}
+        </code></pre>
+
+        <p class="question">Implementieren Sie ein "Array Wrapper"-Objekt mit den Methoden get, store und append, so
+            dass
+            ein Angreifer keinen Zugriff auf das innere, private Array hat.</p>
+
+        <pre class="answer"><code>function vector() {
+    let array = new Array();
+    array.append = function(arg) {
+        this.push(arg);
+    }
+    array.store = function(arg1, arg2) {
+        this[arg1] = arg2;
+    }
+    array.get = function(arg) {
+        return this[arg];
+    }
+    return array;
+}
+        </code></pre>
+    </div>
+
+    <div id="2">
+        <h2>3.2. Advanced Functional JavaScript Programming</h2>
+
+        <p class="question">Make a function that makes a publish/subscribe object. It will reliably deliver all
+            publications to all subscribers in the right order.</p>
+
+        <pre class="answer"><code>function pubsub() {
+    let method;
+    method.subscribe = function(func) {
+        this.method = func;
+    }
+    method.publish = function(arg) {
+        this.method(arg);
+    }
+    return method;
+}
+        </code></pre>
+
+        <p class="question">Make a factory that makes functions that generate unique symbols.</p>
+
+        <pre class="answer"><code>function gensymf(arg) {
+    let x = arg;
+    let y = 0;
+    let symbol = function() {
+        let res = x+''+y;
+        y++;
+        return res;
+    }
+    return symbol;
+}
+        </code></pre>
+
+        <p class="question">Make a function that returns a function that will return the next fibonacci number.</p>
+
+        <pre class="answer"><code>function fibonaccif(arg1, arg2) {
+    let x = arg1;
+    let y = arg2;
+    let fib = function() {
+        let tmp1 = x;
+        x = y;
+        y = tmp1+y;
+        return tmp1;
+    }
+    return fib;
+}
+        </code></pre>
+
+        <p class="question">Write a function that adds from many invocations, until it sees an empty invocation.</p>
+
+        <pre class="answer"><code>function addg(arg1) {
+    function next(arg2) {
+        if(!arg2) {
+            return arg1;
+        } else {
+            arg1 += arg2;
+            return next;
+        }
+    }
+    if(arg1) {
+        return next;
+    }
+}
+        </code></pre>
+
+        <p class="question">Write a function that will take a binary function and apply it to many invocations.</p>
+
+        <pre class="answer"><code>function applyg(func) {
+    return function(arg1) {
+        if(!arg1) {
+            return arg1;
+        } else {
+            return function next(arg2) {
+                if(!arg2) {
+                    return arg1;
+                } else {
+                    arg1 = func(arg1,arg2)
+                    return next;
+                }
+            }
+        }
+    }
+}
+        </code></pre>
+
+        <p class="question">Write a function m that takes a value and an optional source string and returns them in an
+            object.</p>
+
+        <pre class="answer"><code>function m(arg1, arg2) {
+    if(!arg2) {
+        return {"value": arg1};
+    } else {
+        return {"value": arg1, "source": arg2};
+    }
+}
+        </code></pre>
+
+        <p class="question">Write a function addm that takes two m objects and returns an m object.</p>
+
+        <pre class="answer"><code>function addm(m1, m2) {
+    return m(m1.value+m2.value, `(${m1.value}+${m2.value})`);
+}
+        </code></pre>
+
+        <p class="question">Write a function binarymf that takes a binary function and a string and returns a function
+            that acts on m objects.</p>
+
+        <pre class="answer"><code>function binarymf(func, str) {
+    return function(m1, m2) {
+        return m(func(m1.value, m2.value), `(${m1.value}${str}${m2.value})`);
+    }
+}
+        </code></pre>
+
+        <p class="question">Modify function binarymf so that the functions it produces can accept arguments that are
+            either numbers or m objects.</p>
+
+        <pre class="answer"><code>function binarymf(func, str) {
+    return function(m1, m2) {
+        if(m1.value) {
+            return m(func(m1.value, m2.value), `(${m1.value}${str}${m2.value})`);
+        }
+        else {
+            return m(func(m1, m2), `(${m1}${str}${m2})`);
+        }
+    }
+}
+        </code></pre>
+
+        <p class="question">Write function unarymf, which is like binarymf except that it acts on unary functions.</p>
+
+        <pre class="answer"><code>function unarymf(func, str) {
+    return function(arg1) {
+        return m(func(arg1), `(${str} ${arg1})`);
+    }
+}
+        </code></pre>
+
+        <p class="question">Write a function that takes the lengths of two sides of a triangle and computes the length
+            of the hypotenuse. (Hint: c2 = a2 + b2)</p>
+
+        <pre class="answer"><code>function hyp(arg1, arg2) {
+    return Math.sqrt(arg1*arg1+arg2*arg2);
+}
+        </code></pre>
+
+        <p class="question">Write a function that evaluates array expressions.</p>
+
+        <pre class="answer"><code>function exp(arr) {
+    if (Array.isArray(arr)) {
+        return arr[0](exp(arr[1]),exp(arr[2]));
+    } else {
+        return arr;
+    }
+}
+        </code></pre>
+
+        <p class="question">Make a function that stores a value in a variable.</p>
+
+        <pre class="answer"><code>function store(arg) {
+    variable = eval(arg);
+}
+        </code></pre>
+
+        <p class="question">Make a function that takes a binary function, two functions that provide operands, and a
+            function that takes the result.</p>
+
+        <pre class="answer"><code>function quatre(binary, arg1, arg2, res) {
+    let tmp = binary(arg1, arg2);
+    res(tmp);
+}
+        </code></pre>
+
+        <p class="question">Make a function that takes a unary function, and returns a function that takes an argument
+            and a callback.</p>
+
+        <pre class="answer"><code>function unaryc(func) {
+    return function(arg, callback) {
+        return callback(func(arg));
+    }
+}
+        </code></pre>
+
+        <p class="question">Make a function that takes a binary function, and returns a function that takes two
+            arguments and a callback.</p>
+
+        <pre class="answer"><code>function binaryc(func) {
+    return function(arg1, arg2, callback) {
+        return callback(func(arg1,arg2));
+    }
+}
+        </code></pre>
+    </div>
+
+</body>
+
+</html>

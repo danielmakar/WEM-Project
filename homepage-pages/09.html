@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA</title>
+</head>
+
+<style>
+    .question {
+        padding: 10px;
+    }
+
+    .answer {
+        padding: 10px;
+        background-color: lightgrey;
+    }
+</style>
+
+<body>
+    <h1>PWA</h1>
+
+    <div id="1">
+        <h2>9.1. PWA</h2>
+
+        <p class="question">Beschreiben Sie hier Ihr Vorgehen, Ihre Libraries und Tools, die Sie einsetzen:</p>
+
+        <p class="answer">Zunächst einen Service Worker mit Hilfe von Workbox erstellen. Route für jegliche Dateien
+            definieren. Anschließend den Service Worker in der Anwendung registrieren. Web-App Manifest erstellen, damit
+            die PWA installierbar ist. In dem Manifest auf die erstellten Icons verweisen.</p>
+
+        <p class="question">Beschreiben Sie hier Ihre Probleme und Lösungskonzepte:</p>
+
+        <p class="answer">Dateien werden nicht beim ersten Aufruf der Anwendung im Cache gespeichert. Deswegen wird das
+            Workbox-Precaching genutzt, damit die Dateien direkt im Cache vorhanden sind.
+            Um HTTPS zu ermöglichen, wurde die PWA auf netlify deployed.</p>
+
+        <p class="question">Geben Sie hier Ihre Lighthouse-Messergebnisse für Ihre PWA ein:</p>
+
+        <p class="answer">Performance: 86 <br>
+            Accessability: 100 <br>
+            Best Practices: 100 <br>
+            SEO: 91 <br>
+            PWA: Installable 1/1, PWA Optimized 7/7
+        </p>
+
+        <p class="answer">Die Lösung dieser Aufgabe findet man <a
+                href="https://affectionate-jones-cba08b.netlify.app">hier</a>. Diese
+            wurde bei Netlify deployed.</p>
+    </div>
+</body>
+
+</html>

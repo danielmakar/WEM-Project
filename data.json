@@ -1,0 +1,14 @@
+{
+    "Einführung": "01.html",
+    "Responsives Web": "02.html",
+    "JavaScript": "03.html",
+    "DOM": "04.html",
+    "Asynchron": "05.html",
+    "SVG": "06.html",
+    "Node & npm & Deno": "07.html",
+    "Modular Web": "08.html",
+    "PWA": "09.html",
+    "Vue": "10.html",
+    "WebAssembly": "11.html",
+    "Security": "12.html"
+}

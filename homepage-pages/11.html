@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAssembly</title>
+</head>
+
+<style>
+    .question {
+        padding: 10px;
+    }
+
+    .answer {
+        padding: 10px;
+        background-color: lightgrey;
+    }
+</style>
+
+<body>
+    <h1>WebAssembly</h1>
+
+    <div id="1">
+        <h2>11.1. WebAssembly-Modul von Hand erstellen</h2>
+
+        <p class="question">Geben Sie hier Ihren WAT-Code für ggT ggT( x: i32, y: i32 ): i32 ein:</p>
+
+        <pre class="answer"><code>(module
+    (export "ggT" (func $ggT ))
+    (func $ggT (param $x i32) (param $y i32) (result i32)
+        local.get $x
+        i32.eqz
+        if
+            local.get $y
+            return
+        end
+        loop $ggtLoop
+            local.get $y
+            i32.const 0
+            i32.ne
+            if
+                local.get $x
+                local.get $y
+                i32.gt_s
+                if
+                    local.get $x
+                    local.get $y
+                    i32.sub
+                    local.set $x
+                else
+                    local.get $y
+                    local.get $x
+                    i32.sub
+                    local.set $y
+                end
+                br $ggtLoop
+            end
+        end
+        local.get $x
+        return
+    )
+)
+        </code></pre>
+
+        <p class="question">Geben Sie hier Ihren Code für den Test mit allen Zahlen von 1 bis 100 ein:</p>
+
+        <pre class="answer"><code>const webassembly = require("webassembly");
+
+webassembly.load("ggt.wasm").then(module => {
+    console.log(module.exports.ggT(30, 18));
+})
+        </code></pre>
+    </div>
+
+    <div id="2">
+        <h2>11.2. Performanz-Messungen und -Vergleich</h2>
+
+        <p class="question">Wie viele Primzahlen gibt es bis 100.000? Geben Sie hier nur die Anzahl ein:</p>
+
+        <p class="answer">9592</p>
+
+        <p class="question">Geben Sie hier den JavaScript-Code für Ihren Primzahl-Algorithmus ein:</p>
+
+        <pre class="answer"><code>function isPrime(num) {
+    for (let i = 2; i &lt; num; i++) {
+        if (num % i == 0) return false;
+    }
+    return num >= 2;
+}
+    
+function getPrimes() {
+    let counter = 0;
+    for (let i = 1; i &gt;= 100000; i++) {
+        if(isPrime(i)) counter++;
+    }
+    return counter;
+}
+        </code></pre>
+
+        <p class="question">Geben Sie hier den WAT-Code (textuelle Repräsentation von WebAssembly, siehe wasm2wat) für
+            Ihren Primzahl-Algorithmus ein:</p>
+
+        <pre class="answer"><code>(module
+    (type $none_=>_i32 (func (result i32)))
+    (memory $0 0)
+    (export "getPrimes" (func $assembly/index/getPrimes))
+    (export "memory" (memory $0))
+    (func $assembly/index/getPrimes (result i32)
+        (local $0 i32)
+        (local $1 i32)
+        i32.const 1
+        local.set $0
+        loop $for-loop|0
+        local.get $0
+        i32.const 100000
+        i32.le_s
+        if
+        local.get $1
+        i32.const 1
+        i32.add
+        local.get $1
+        block $__inlined_func$assembly/index/isPrime (result i32)
+        i32.const 2
+        local.set $1
+        loop $for-loop|01
+            local.get $0
+            local.get $1
+            i32.gt_s
+            if
+            i32.const 0
+            local.get $0
+            local.get $1
+            i32.rem_s
+            i32.eqz
+            br_if $__inlined_func$assembly/index/isPrime
+            drop
+            local.get $1
+            i32.const 1
+            i32.add
+            local.set $1
+            br $for-loop|01
+            end
+        end
+        local.get $0
+        i32.const 2
+        i32.ge_s
+        end
+        select
+        local.set $1
+        local.get $0
+        i32.const 1
+        i32.add
+        local.set $0
+        br $for-loop|0
+        end
+        end
+        local.get $1
+    )
+)
+        </code></pre>
+
+        <p class="question">Geben Sie hier den Quelltext in der höheren Programmiersprache (C, C++, Rust,
+            AssemblyScript) für Ihren Primzahl-Algorithmus, aus dem Sie WebAssembly compiliert haben, ein:
+            (AssemblyScript)
+        </p>
+
+        <pre class="answer"><code>function isPrime(num: i32): boolean {
+    for (let i = 2; i < num; i++) {
+        if (num % i == 0) return false;
+    }
+    return num >= 2;
+}
+
+export function getPrimes(): i32 {
+    let counter = 0;
+    for (let i = 1; i <= 100000; i++) {
+        if(isPrime(i)) counter++;
+    }
+    return counter;
+}
+        </code></pre>
+
+        <p class="answer">Die Lösung für die Benchmark-Tests findet man <a href="../Übung 11/index.html">hier</a>.
+        </p>
+
+        <p class="question">Geben Sie hier Ihre Messergebnisse (min, max, avg) ein:</p>
+
+        <p class="answer">Webassembly-min: 1700ms <br>
+
+            Webassembly-max: 1721.2000000476837ms <br>
+
+            Webassembly-avg: 1706.9899999976158ms <br>
+
+            JavaScript-min: 1227.1000000238419ms <br>
+
+            JavaScript-max: 1345.6000000238419ms <br>
+
+            JavaScript-avg: 1253.3699999928474ms</p>
+
+        <p class="question">Geben Sie hier Ihre statistische Analyse ein. Wie viel Prozent schneller ist WebAssembly?
+        </p>
+
+        <p class="answer">Wenn man für die statistische Analyse den Durchschnittswert nutzt, dann ist JavaScript um 28%
+            schneller. </p>
+
+        <p class="question">Wie erklären Sie sich die Performanz-Unterschiede?
+        </p>
+
+        <p class="answer">Mich wundert es generell, dass JavaScript in meiner Lösung schneller ist als WebAssembly.
+            Erklären kann ich dieses Verhalten leider nicht.</p>
+    </div>
+</body>
+
+</html>

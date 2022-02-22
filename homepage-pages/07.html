@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js, npm & Deno</title>
+</head>
+
+<style>
+    .question {
+        padding: 10px;
+    }
+
+    .answer {
+        padding: 10px;
+        background-color: lightgrey;
+    }
+</style>
+
+<body>
+    <h1>Node.js, npm & Deno</h1>
+
+    <div id="1">
+        <h2>7.1. File Generatoren</h2>
+
+        <p class="question">Geben Sie hier Ihren ECMAScript 2021-Quellcode für number_file_gen.js ein:</p>
+
+        <pre class="answer"><code>const fs = require("fs");
+
+let fileLength = process.argv[2];
+fileLength = fileLength.replace("_", "");
+fileLength = parseInt(fileLength);
+
+let content = "";
+for (let i = 0; i < fileLength; i++) {
+    content += `${i}.`;
+    if (i < fileLength - 1) content += "\n";
+}
+fs.writeFileSync("./number_file.txt", content);
+
+        </code></pre>
+
+        <p class="question">Geben Sie hier Ihren ECMAScript 2021-Quellcode für alpha_file_gen.js ein:</p>
+
+        <pre class="answer"><code>const fs = require("fs");
+
+let fileLength = process.argv[2];
+fileLength = fileLength.replace("_", "");
+fileLength = parseInt(fileLength);
+
+let content = "";
+const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
+let line_count = 0;
+let stringLength = 1;
+while(line_count < fileLength) {
+    content += createContentForLength(alphabet, stringLength, "").join("\n");
+    if (line_count % 26 == 0) content += "\n";
+    stringLength++;
+}
+
+fs.writeFileSync("./alpha_file.txt", content);
+
+// in Anlehnung an https://stackoverflow.com/questions/34127294/how-to-generate-letter-in-all-possible-combinations-with-specific-length-limit
+function createContentForLength(input, length, curstr) {
+    if(curstr.length == length) {
+        line_count++;
+        return [ curstr ];
+    } 
+    let ret = [];
+    for(let i = 0; i < input.length; i++) {
+        if(line_count >= fileLength) break;
+        ret.push.apply(ret, createContentForLength(input, length, curstr + input[i]));
+    }
+    return ret;
+}
+            
+        </code></pre>
+    </div>
+
+    <div id="2">
+        <h2>7.2. Performance Merge</h2>
+
+        <p class="question">Geben Sie hier Ihren ECMAScript 2021-Quellcode für merge_files.js ein:</p>
+
+        <pre class="answer"><code>const fs = require("fs");
+
+const file1 = process.argv[2];
+const file2 = process.argv[3];
+
+let lines1 = [];
+let lines2 = [];
+let linesMerged = [];
+
+console.time("Perfmormace fs.readFile");
+
+// https://kaul.inf.h-brs.de/wem/#app-8-0&07_node=page-48
+fs.readFile(file1, "utf-8", callback(lines1));
+fs.readFile(file2, "utf-8", callback(lines2));
+
+function callback(lines) {
+    return function(err, data) {
+        lines.push(...data.split("\n"));
+        if (lines1.length && lines2.length) {
+            lines1.forEach((line, i) => linesMerged[i] = `${lines1[i]} ${lines2[i]}`);
+            console.timeEnd("Perfmormace fs.readFile");
+        }
+    }
+}
+
+        </code></pre>
+
+        <p class="question">Geben Sie hier Ihren ECMAScript 2021-Quellcode für merge_streams.js ein:</p>
+
+        <pre class="answer"><code>const fs = require("fs");
+const { pipeline } = require("stream/promises");
+
+const file1 = process.argv[2];
+const file2 = process.argv[3];
+
+let lines1 = [];
+let lines2 = [];
+let linesMerged = [];
+
+console.time("Perfmormace fs.createReadStream");
+
+async function run() {
+    await pipeline(
+        fs.createReadStream(file1, "utf-8"),
+        async function (source) {
+            for await (const chunk of source) lines1.push(...chunk.split("\n"));
+        }
+    );
+    await pipeline(
+        fs.createReadStream(file1, "utf-8"),
+        async function (source) {
+            for await (const chunk of source) lines2.push(...chunk.split("\n"));
+        }
+    )
+    if (lines1.length && lines2.length) lines1.forEach((line, i) => linesMerged[i] = `${lines1[i]} ${lines2[i]}`);
+
+    console.timeEnd("Perfmormace fs.createReadStream");
+}
+run();
+            
+        </code></pre>
+
+        <p class="question">Geben Sie hier die Ergebnisse Ihrer Performanz-Messungen ein:</p>
+
+        <p class="answer">merge_streams.js benötigt 63.352msms bei einer Zeilenlänge von 123456.
+            merge_files.js benötigt 56.692ms bei einer Zeilenlänge von 123456.</p>
+    </div>
+
+    <div id="3">
+        <h2>7.3. Express.js Server</h2>
+
+        <p class="answer">Die Lösung dieser Aufgabe findet man <a
+                href="https://tender-mayer-14467f.netlify.app">hier</a>. Diese wurde bei Netlify deployed.</p>
+    </div>
+</body>
+
+</html>

