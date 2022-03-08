@@ -1,3 +1,15 @@
+if ("serviceWorker" in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register("sw.js").then(registration => {
+          console.log("Service Worker registered: ", registration);
+      }).catch(error => {
+          console.log("Service Worker Registration Failed: ", error);
+      })
+    });
+  } else {
+      console.log("Service Worker not suported");
+  }
+
 const nav = document.querySelector(".nav");
 const content = document.querySelector(".content");
 
@@ -5,6 +17,8 @@ const content = document.querySelector(".content");
     let data = await (await fetch("data.json")).json();
 
     loadNav(data);
+
+    loadHome();
 })();
 
 async function loadNav(data) {
