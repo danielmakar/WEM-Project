@@ -32,6 +32,8 @@
 <script asnyc>
     let primes = document.getElementById("primes");
     const worker = new Worker("worker.js");
+
+    // https://kaul.inf.h-brs.de/wem/#app-6-0&05_async=page-32
     async function animate() {
         const container = document.getElementById("container");
         const animate = document.getElementById("animate");
