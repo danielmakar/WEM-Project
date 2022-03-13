@@ -10,5 +10,6 @@
     "PWA": "09.html",
     "Vue": "10.html",
     "WebAssembly": "11.html",
-    "Security": "12.html"
+    "Security": "12.html",
+    "Storybook": "storybook.html"
 }
