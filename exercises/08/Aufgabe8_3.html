@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="header">
+        <h1>WWW-Navigator</h1>
+    </div>
+    <div id="mainnav">
+        <menu-component orientation="horizontal">
+            <a href='#' onclick="alert()">HTML</a>
+            <a href='#'>CSS</a>
+            <a href='#'>JavaScript</a>
+            <a href='#'>Other</a>
+        </menu-component>
+    </div>
+    <div id="subnav">
+        <menu-component orientation="vertical"></menu-component>
+    </div>
+    <div id="content">
+        <content-component></content-component>
+    </div>
+    <div id="source">
+        <p>https://www.w3schools.com/</p>
+    </div>
+</body>
+
+<script type="module" src="menu_component.js"></script>
+<script type="module" src="content_component.js"></script>
+
+<script>
+    function load() {
+        let content = document.querySelector("content-component");
+        content.loadContent("Irgendein Text");
+    }
+</script>
+
+</html>
