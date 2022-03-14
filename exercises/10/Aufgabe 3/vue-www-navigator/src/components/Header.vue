@@ -1,12 +1,14 @@
 <template>
 <div class="header">
-    <h1>WWW-Navigator</h1>
+    <h1>{{text}}</h1>
 </div>
 </template>
 
 <script>
 export default {
-
+    props: {
+        text: {type: String, default: "WWW-Navigator"}
+    }
 }
 </script>
 
